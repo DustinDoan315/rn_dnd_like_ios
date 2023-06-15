@@ -1,25 +1,36 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import Component from './Component';
 
 const users = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23,
+  {name: 'John', age: '21'},
+  {name: 'Dong', age: '21'},
+
+  {name: 'Doan', age: '21'},
+
+  {name: 'Khanh', age: '21'},
+
+  {name: 'Harry', age: '21'},
+  {name: 'John', age: '21'},
+  {name: 'John', age: '21'},
 ];
+const _renderItems = item => {
+  return (
+    <View>
+      <Text>{item?.name}</Text>
+    </View>
+  );
+};
 
 const App = () => {
   return (
     <View style={styles.container}>
       <Component
-        // IconDelete={
-        //   <View>
-        //     <Text style={{color: 'green'}}>LOL</Text>
-        //   </View>
-        // }
+        marginLeftItem={10}
+        renderItem={_renderItems}
         data={users}
-        marginTopContain={10}>
-        <Text>Hello</Text>
-      </Component>
+        marginTopContain={10}
+      />
     </View>
   );
 };

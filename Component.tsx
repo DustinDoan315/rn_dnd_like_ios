@@ -12,47 +12,50 @@ import {
 
 const Component = ({
   IconDelete,
-  data,
-  marginTopContain,
-  widthContain,
+  data = [],
+  marginTopContain = 15,
+  widthContain = '100%',
   justifyContentContain,
-  paddingHorizontalContain,
-  widthItem,
-  heightItem,
-  radiusItem,
-  backgroundColorItem,
-  justifyItem,
-  alignItem,
-  marginRightItem,
-  marginBottomItem,
+  paddingHorizontalContain = 15,
+  widthItem = 100,
+  heightItem = 100,
+  radiusItem = 20,
+  backgroundColorItem = 'crimson',
+  justifyItem = 'center',
+  alignItem = 'center',
+  marginRightItem = 10,
+  marginLeftItem = 0,
+  marginBottomItem = 10,
   children,
-  btnDeleteTop,
-  btnDeleteLeft,
-  backgroundColorBtnDelete,
-  widthBtnDelete,
-  heightBtnDelete,
-  radiusBtnDelete,
-  justifyBtnDelete,
-  alignBtnDelete,
-  valueShakeLeft,
-  durationShakeLeft,
-  valueShakeRight,
-  durationShakeRight,
-  degLeft,
-  degRight,
-  onPressBtnDelete,
-  sizeItemBtnDelete,
+  btnDeleteTop = -10,
+  btnDeleteLeft = -10,
+  backgroundColorBtnDelete = 'yellow',
+  widthBtnDelete = 30,
+  heightBtnDelete = 30,
+  radiusBtnDelete = 20,
+  justifyBtnDelete = 'center',
+  alignBtnDelete = 'center',
+  valueShakeLeft = 0.25,
+  durationShakeLeft = 75,
+  valueShakeRight = -0.25,
+  durationShakeRight = 75,
+  degLeft = '-10deg',
+  degRight = '10deg',
+  sizeItemBtnDelete = 16,
+  timeoutShake = 20000,
+  renderItem,
 }) => {
   const tiltAnimation = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
   const endAnimationTimeout = useRef(null);
   const [endAnimation, setEndAnimation] = useState(false);
+  const [dataShow, setDataShow] = useState(data);
 
   useEffect(() => {
     if (endAnimation) {
       endAnimationTimeout.current = setTimeout(() => {
         stopShakeAnimation();
-      }, 10000);
+      }, timeoutShake);
     } else {
       clearTimeout(endAnimationTimeout.current);
     }
@@ -62,18 +65,37 @@ const Component = ({
     };
   }, [endAnimation]);
 
-  const renderIconDelete = () => {
+  const _renderItem = item => {
+    return renderItem ? (
+      renderItem(item)
+    ) : (
+      <Text style={{fontSize: sizeItemBtnDelete, fontWeight: 'bold'}}>
+        Hello
+      </Text>
+    );
+  };
+
+  const renderIconDelete = (item, index) => {
     return IconDelete ? (
-      <Pressable onPress={onPressBtnDelete} style={styles.btn_delete}>
+      <Pressable
+        onPress={() => handlerDeleteItem(index)}
+        style={styles.btnDelete}>
         {IconDelete}
       </Pressable>
     ) : (
-      <Pressable onPress={onPressBtnDelete} style={styles.btn_delete}>
-        <Text style={{fontSize: sizeItemBtnDelete || 16, fontWeight: 'bold'}}>
-          x
-        </Text>
+      <Pressable
+        onPress={() => handlerDeleteItem(index)}
+        style={styles.btnDelete}>
+        <Text style={{fontSize: sizeItemBtnDelete, fontWeight: 'bold'}}>x</Text>
       </Pressable>
     );
+  };
+
+  const handlerDeleteItem = (index: number) => {
+    currentIndex = data.findIndex((i, idx) => idx === index);
+    dataShow.splice(currentIndex, 1);
+    setDataShow(dataShow);
+    stopShakeAnimation();
   };
 
   const handlerLongPress = () => {
@@ -87,26 +109,26 @@ const Component = ({
     Animated.loop(
       Animated.sequence([
         Animated.timing(tiltAnimation, {
-          toValue: valueShakeLeft || 0.25,
-          duration: durationShakeLeft || 75,
+          toValue: valueShakeLeft,
+          duration: durationShakeLeft,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(tiltAnimation, {
-          toValue: valueShakeRight || -0.25,
-          duration: durationShakeRight || 75,
+          toValue: valueShakeRight,
+          duration: durationShakeRight,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(tiltAnimation, {
-          toValue: valueShakeLeft || 0.25,
-          duration: durationShakeLeft || 75,
+          toValue: valueShakeLeft,
+          duration: durationShakeLeft,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
         Animated.timing(tiltAnimation, {
-          toValue: valueShakeRight || -0.25,
-          duration: durationShakeRight || 75,
+          toValue: valueShakeRight,
+          duration: durationShakeRight,
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
@@ -126,38 +148,39 @@ const Component = ({
     main: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      marginTop: marginTopContain || 15,
-      width: widthContain || '100%',
-      justifyContent: justifyContentContain || 'space-between',
-      paddingHorizontal: paddingHorizontalContain || 15,
+      marginTop: marginTopContain,
+      width: widthContain,
+      justifyContent: justifyContentContain,
+      paddingHorizontal: paddingHorizontalContain,
     },
     item: {
-      width: widthItem || 100,
-      height: heightItem || 100,
-      borderRadius: radiusItem || 20,
-      backgroundColor: backgroundColorItem || 'crimson',
-      justifyContent: justifyItem || 'center',
-      alignItems: alignItem || 'center',
-      marginRight: marginRightItem || 10,
-      marginBottom: marginBottomItem || 10,
+      width: widthItem,
+      height: heightItem,
+      borderRadius: radiusItem,
+      backgroundColor: backgroundColorItem,
+      justifyContent: justifyItem,
+      alignItems: alignItem,
+      marginRight: marginRightItem,
+      marginLeft: marginLeftItem,
+      marginBottom: marginBottomItem,
     },
-    btn_delete: {
+    btnDelete: {
       position: 'absolute',
-      top: btnDeleteTop || -10,
-      left: btnDeleteLeft || -10,
-      backgroundColor: backgroundColorBtnDelete || 'yellow',
-      width: widthBtnDelete || 30,
-      height: heightBtnDelete || 30,
-      borderRadius: radiusBtnDelete || 20,
-      justifyContent: justifyBtnDelete || 'center',
-      alignItems: alignBtnDelete || 'center',
+      top: btnDeleteTop,
+      left: btnDeleteLeft,
+      backgroundColor: backgroundColorBtnDelete,
+      width: widthBtnDelete,
+      height: heightBtnDelete,
+      borderRadius: radiusBtnDelete,
+      justifyContent: justifyBtnDelete,
+      alignItems: alignBtnDelete,
     },
   });
 
   return (
     <ScrollView>
       <View style={styles.main}>
-        {data?.map((item, index) => (
+        {dataShow?.map((item, index) => (
           <Animated.View
             key={index}
             style={{
@@ -165,7 +188,7 @@ const Component = ({
                 {
                   rotate: tiltAnimation.interpolate({
                     inputRange: [-1, 1],
-                    outputRange: [degLeft || '-10deg', degRight || '10deg'],
+                    outputRange: [degLeft, degRight],
                   }),
                 },
               ],
@@ -175,8 +198,8 @@ const Component = ({
               onLongPress={handlerLongPress}
               style={styles.item}>
               {children}
-
-              {renderIconDelete()}
+              {_renderItem(item)}
+              {endAnimation && renderIconDelete(item, index)}
             </Pressable>
           </Animated.View>
         ))}
