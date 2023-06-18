@@ -22,9 +22,20 @@ yarn add react-native-dnd-like-ios
 
 ```
 
-## Usage
+## Setup
+
+#### Add this line to the AndroidManifest.xml file for permissions.
+
+```bash
+<uses-permission android:name="android.permission.VIBRATE"/>
+
+```
+
+## Quickstart
 
 ```javascript
+import React, { useState } from "react";
+import { View, Text, Dimensions } from "react-native";
 import DnDLikeIOS from "react-native-dnd-like-ios";
 const { width, height } = Dimensions.get("window");
 
@@ -38,7 +49,7 @@ const users = [
   { name: "Name_No7" },
 ];
 
-const Item = (item, index) => {
+const _renderItem = (item, index) => {
   return (
     <View
       style={{
@@ -55,13 +66,16 @@ const Item = (item, index) => {
 };
 
 const App = () => {
+  const [newData, setNewData] = useState([]);
+
   return (
     <View style={styles.container}>
       <DnDLikeIOS
         parentWidth={width}
         parentHeight={height}
-        Item={Item}
+        Item={_renderItem}
         data={users}
+        setNewDataSource={setNewData}
       />
     </View>
   );
@@ -74,6 +88,34 @@ const styles = StyleSheet.create({
   },
 });
 ```
+
+## Document
+
+| Variable             | Defined                                                                | Type     |
+| -------------------- | ---------------------------------------------------------------------- | -------- |
+| data                 | List the data used to render each list item.                           | Array    |
+| setNewDataSource     | Return the new data when a handler deletes an item in the list.        | Function |
+| Item                 | This is the child component you want to show.                          | Function |
+| IconDelete           | This is the icon delete you want to show.                              | Function |
+| parentWidth          | This is width of your component you want render                        | Number   |
+| parentHeight         | This is height of your component you want render                       | Number   |
+| childrenWidth        | This is width of your Child item component you want render             | Number   |
+| childrenHeight       | This is height of your Child item component you want render            | Number   |
+| widthIconDelete      | This is width of icon delete                                           | Number   |
+| heightIconDelete     | This is height of icon delete                                          | Number   |
+| radiusIconDelete     | This is border radius of icon delete                                   | Number   |
+| topIconDelete        | This is position top of icon delete                                    | Number   |
+| leftIconDelete       | This is position left of icon delete                                   | Number   |
+| degLeft              | This is the value to shake the Child item component to the left        | String   |
+| degRight             | This is the value to shake the Child item component to the right       | String   |
+| timeoutShake         | This is the time at which the shaking stops                            | Number   |
+| durationShakeLeft    | This is the time to shake the Child item component to the left         | Number   |
+| valueShakeRight      | This is the value to shake the Child item component to the right       | Number   |
+| durationShakeRight   | This is the time to shake the Child item component to the right        | Number   |
+| marginChildrenBottom | This is the value to set the margin bottom of the Child item component | Number   |
+| marginChildrenRight  | This is the value to set the margin right of the Child item component  | Number   |
+| marginChildrenLeft   | This is the value to set the margin left of the Child item component   | Number   |
+| marginChildrenTop    | This is the value to set the margin top of the Child item component    | Number   |
 
 ## Contributing
 
