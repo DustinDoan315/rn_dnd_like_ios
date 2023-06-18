@@ -1,4 +1,5 @@
 # React Native Drag and Drop like IOS
+[![npm downloads](https://img.shields.io/npm/dm/react-native-dnd-like-ios.svg)](https://www.npmjs.com/package/react-native-dnd-like-ios)
 
 "react-native-dnd-like-ios" is a powerful JavaScript library for creating captivating animations in your React Native applications. This library empowers developers to effortlessly incorporate smooth and fluid drag-and-drop interactions, inspired by the intuitive iOS user interface.
 
