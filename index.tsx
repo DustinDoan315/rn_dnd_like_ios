@@ -12,25 +12,30 @@ import AutoDragSort from "./AutoDragSort";
 const { width, height } = Dimensions.get("window");
 
 const DnDLikeIOS = ({
-  IconDelete,
   data = [],
-  valueShakeLeft = 0.25,
-  durationShakeLeft = 75,
-  valueShakeRight = -0.25,
-  durationShakeRight = 75,
-  degLeft = "-10deg",
-  degRight = "10deg",
-  sizeItemBtnDelete = 16,
-  timeoutShake = 20000,
+  setNewDataSource,
   Item,
+  IconDelete,
   parentWidth = width,
   parentHeight = height,
   childrenWidth = 75,
   childrenHeight = 75,
+  widthIconDelete = 15,
+  heightIconDelete = 15,
+  radiusIconDelete = "50%",
+  degLeft = "-10deg",
+  degRight = "10deg",
+  timeoutShake = 20000,
+  valueShakeLeft = 0.25,
+  durationShakeLeft = 75,
+  valueShakeRight = -0.25,
+  durationShakeRight = 75,
   marginChildrenBottom = 10,
   marginChildrenRight = 10,
   marginChildrenLeft = 10,
   marginChildrenTop = 10,
+  topIconDelete = 0,
+  leftIconDelete = 0,
 }) => {
   const tiltAnimation = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
@@ -39,6 +44,12 @@ const DnDLikeIOS = ({
   const [dataShow, setDataShow] = useState(data);
   const [childSPress, setChildSPress] = useState(false);
   const [childLPress, setChildLPress] = useState(false);
+
+  useEffect(() => {
+    if (setNewDataSource) {
+      setNewDataSource(dataShow);
+    }
+  }, [dataShow]);
 
   useEffect(() => {
     if (endAnimation) {
@@ -87,9 +98,7 @@ const DnDLikeIOS = ({
         </View>
       </Animated.View>
     ) : (
-      <Text style={{ fontSize: sizeItemBtnDelete, fontWeight: "bold" }}>
-        Hello
-      </Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Hello</Text>
     );
   };
 
@@ -101,13 +110,13 @@ const DnDLikeIOS = ({
           position: "absolute",
           backgroundColor: "#828282",
           zIndex: 9999,
-          top: 0,
-          left: 0,
-          width: 15,
-          height: 15,
+          top: topIconDelete,
+          left: leftIconDelete,
+          width: widthIconDelete,
+          height: heightIconDelete,
           justifyContent: "center",
           alignItems: "center",
-          borderRadius: 20,
+          borderRadius: radiusIconDelete,
         }}>
         {IconDelete}
       </Pressable>
@@ -118,13 +127,13 @@ const DnDLikeIOS = ({
           position: "absolute",
           backgroundColor: "#828282",
           zIndex: 9999,
-          top: 0,
-          left: 0,
-          width: 15,
-          height: 15,
+          top: topIconDelete,
+          left: leftIconDelete,
+          width: widthIconDelete,
+          height: heightIconDelete,
           justifyContent: "center",
           alignItems: "center",
-          borderRadius: 20,
+          borderRadius: radiusIconDelete,
         }}>
         <Text style={{ fontSize: 10, fontWeight: "bold", color: "#000000" }}>
           ─
