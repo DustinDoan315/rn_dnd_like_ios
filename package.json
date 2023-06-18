@@ -10,6 +10,13 @@
     "react-native-drag-and-drop"
   ],
   "main": "index.tsx",
+   "keywords": [
+    "react-native",
+    "react-native-dnd",
+    "react-native-animation",
+    "react-native-dnd-like-ios",
+    "react-native-drag-and-drop"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
