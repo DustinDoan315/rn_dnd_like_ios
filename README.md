@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
 ## Document
 
-| Prop             | Defined                                                                | Type     |
+| Props             | Defined                                                                | Types     |
 | -------------------- | ---------------------------------------------------------------------- | -------- |
 | data                 | List the data used to render each list item.                           | Array    |
 | setNewDataSource     | Return the new data when a handler deletes an item in the list.        | Function |
