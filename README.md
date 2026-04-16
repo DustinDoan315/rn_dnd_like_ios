@@ -1,7 +1,7 @@
 # react-native-dnd-like-ios
 
-[![npm downloads](https://img.shields.io/npm/dm/@harydoan315%2Freact-native-dnd-like-ios.svg)](https://www.npmjs.com/package/@harydoan315/react-native-dnd-like-ios)
-[![npm version](https://img.shields.io/npm/v/@harydoan315%2Freact-native-dnd-like-ios.svg)](https://www.npmjs.com/package/@harydoan315/react-native-dnd-like-ios)
+[![npm downloads](https://img.shields.io/npm/dm/@dustindoan315%2Freact-native-dnd-like-ios.svg)](https://www.npmjs.com/package/@dustindoan315/react-native-dnd-like-ios)
+[![npm version](https://img.shields.io/npm/v/@dustindoan315%2Freact-native-dnd-like-ios.svg)](https://www.npmjs.com/package/@dustindoan315/react-native-dnd-like-ios)
 
 Drag-and-drop sortable grid for React Native, mimicking the iOS home screen rearrange experience. Long-press any item to enter wiggle/edit mode, then drag to reorder. Written in **TypeScript** with full type declarations.
 
@@ -28,9 +28,9 @@ Drag-and-drop sortable grid for React Native, mimicking the iOS home screen rear
 ## Installation
 
 ```bash
-npm install @harydoan315/react-native-dnd-like-ios
+npm install @dustindoan315/react-native-dnd-like-ios
 # or
-yarn add @harydoan315/react-native-dnd-like-ios
+yarn add @dustindoan315/react-native-dnd-like-ios
 ```
 
 **Peer dependencies** (already in your RN project):
@@ -57,7 +57,7 @@ Add the `VIBRATE` permission to `android/app/src/main/AndroidManifest.xml`:
 ```jsx
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import DnDLikeIOS from '@harydoan315/react-native-dnd-like-ios';
+import DnDLikeIOS from '@dustindoan315/react-native-dnd-like-ios';
 
 const { width } = Dimensions.get('window');
 
@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
 ```tsx
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import DnDLikeIOS from '@harydoan315/react-native-dnd-like-ios';
-import type { DnDLikeIOSProps } from '@harydoan315/react-native-dnd-like-ios';
+import DnDLikeIOS from '@dustindoan315/react-native-dnd-like-ios';
+import type { DnDLikeIOSProps } from '@dustindoan315/react-native-dnd-like-ios';
 
 const { width } = Dimensions.get('window');
 
@@ -218,8 +218,8 @@ The default export. Handles long-press shake animation, delete mode, and wraps `
 The lower-level engine component, exported as a named export. Use this directly when you need full control over the drag behaviour without the shake/delete overlay.
 
 ```tsx
-import { AutoDragSortableView } from '@harydoan315/react-native-dnd-like-ios';
-import type { AutoDragSortableViewProps } from '@harydoan315/react-native-dnd-like-ios';
+import { AutoDragSortableView } from '@dustindoan315/react-native-dnd-like-ios';
+import type { AutoDragSortableViewProps } from '@dustindoan315/react-native-dnd-like-ios';
 ```
 
 | Prop | Type | Default | Description |
@@ -265,7 +265,7 @@ import type { AutoDragSortableViewProps } from '@harydoan315/react-native-dnd-li
 ```tsx
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { AutoDragSortableView } from '@harydoan315/react-native-dnd-like-ios';
+import { AutoDragSortableView } from '@dustindoan315/react-native-dnd-like-ios';
 
 interface Item {
   id: string;
