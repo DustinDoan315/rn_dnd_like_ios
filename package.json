@@ -13,6 +13,11 @@
   "react-native": "src/index.ts",
   "types": "src/index.ts",
   "sideEffects": false,
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
