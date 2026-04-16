@@ -1,5 +1,5 @@
 {
-  "name": "react-native-dnd-like-ios",
+  "name": "@harydoan315/react-native-dnd-like-ios",
   "version": "2.0.0",
   "description": "Drag-and-drop sortable grid for React Native, mimicking the iOS home screen rearrange experience",
   "keywords": [
