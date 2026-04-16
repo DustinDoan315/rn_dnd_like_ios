@@ -22,6 +22,7 @@ export default class AutoDragSortableView extends Component {
     super(props);
 
     this.sortRefs = new Map();
+    this.displacedItems = new Set();
 
     const itemWidth =
       props.childrenWidth +
@@ -61,8 +62,9 @@ export default class AutoDragSortableView extends Component {
       height: height,
       itemWidth: itemWidth,
       itemHeight: itemHeight,
-      heightItem: 0,
       heightScrollView: heightScrollView,
+      scrollEnabled: true,
+      activeDragIndex: null,
     };
 
     this._panResponder = PanResponder.create({
@@ -158,6 +160,7 @@ export default class AutoDragSortableView extends Component {
   // Initialization tag
   initTag = () => {
     this.clearAutoInterval();
+    this.displacedItems.clear();
     this.autoObj = {
       curDy: 0,
       scrollDx: 0,
@@ -269,6 +272,7 @@ export default class AutoDragSortableView extends Component {
           originTop: this.state.dataSource[touchIndex].originTop,
           moveToIndex: touchIndex,
         };
+        this.setState({ activeDragIndex: touchIndex });
         this.isMovePanResponder = true;
       });
     }
@@ -368,12 +372,6 @@ export default class AutoDragSortableView extends Component {
       const left = this.touchCurItem.originLeft + dx;
       const top = this.touchCurItem.originTop + dy;
 
-      this.touchCurItem.ref.setNativeProps({
-        style: {
-          zIndex: touchZIndex,
-        },
-      });
-
       this.state.dataSource[this.touchCurItem.index].position.setValue({
         x: left,
         y: top,
@@ -417,8 +415,7 @@ export default class AutoDragSortableView extends Component {
             nextItem = this.state.dataSource[index + 1];
           } else if (
             index != this.touchCurItem.index &&
-            (item.position.x._value != item.originLeft ||
-              item.position.y._value != item.originTop)
+            this.displacedItems.has(index)
           ) {
             nextItem = this.state.dataSource[index];
           } else if (
@@ -431,10 +428,15 @@ export default class AutoDragSortableView extends Component {
           }
 
           if (nextItem != null) {
+            if (nextItem === this.state.dataSource[index]) {
+              this.displacedItems.delete(index);
+            } else {
+              this.displacedItems.add(index);
+            }
             Animated.timing(item.position, {
               toValue: {
-                x: parseInt(nextItem.originLeft + 0.5),
-                y: parseInt(nextItem.originTop + 0.5),
+                x: Math.round(nextItem.originLeft),
+                y: Math.round(nextItem.originTop),
               },
               duration: this.props.slideDuration,
               easing: Easing.out(Easing.quad),
@@ -470,11 +472,7 @@ export default class AutoDragSortableView extends Component {
         }
       ).start(() => {
         if (this.touchCurItem) {
-          this.touchCurItem.ref.setNativeProps({
-            style: {
-              zIndex: defaultZIndex,
-            },
-          });
+          this.setState({ activeDragIndex: null });
           this.changePosition(
             this.touchCurItem.index,
             this.touchCurItem.moveToIndex
@@ -548,6 +546,8 @@ export default class AutoDragSortableView extends Component {
         dataSource: newDataSource,
       },
       () => {
+        this.displacedItems.clear();
+
         if (this.props.onDataChange) {
           this.props.onDataChange(this.getOriginalData());
         }
@@ -696,13 +696,6 @@ export default class AutoDragSortableView extends Component {
           key={key}
           ref={(ref) => this.sortRefs.set(key, ref)}
           {...this._panResponder.panHandlers}
-          onLayout={(event) => {
-            const heightI = event.nativeEvent.layout.height;
-
-            this.setState({
-              heightItem: heightI,
-            });
-          }}
           style={[
             styles.item,
             {
@@ -714,6 +707,7 @@ export default class AutoDragSortableView extends Component {
               top: item.position.y,
               opacity: item.scaleValue.interpolate({ inputRange, outputRange }),
               transform: [transformObj],
+              zIndex: index === this.state.activeDragIndex ? touchZIndex : defaultZIndex,
             },
           ]}>
           <TouchableOpacity
@@ -828,6 +822,5 @@ const styles = StyleSheet.create({
   },
   item: {
     position: "absolute",
-    zIndex: defaultZIndex,
   },
 });

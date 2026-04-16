@@ -22,7 +22,7 @@ const DnDLikeIOS = ({
   childrenHeight = 75,
   widthIconDelete = 15,
   heightIconDelete = 15,
-  radiusIconDelete = "50%",
+  radiusIconDelete,
   degLeft = "-10deg",
   degRight = "10deg",
   timeoutShake = 20000,
@@ -37,6 +37,10 @@ const DnDLikeIOS = ({
   topIconDelete = 0,
   leftIconDelete = 0,
 }) => {
+  const computedBorderRadius =
+    typeof radiusIconDelete === "number"
+      ? radiusIconDelete
+      : Math.floor(Math.min(widthIconDelete, heightIconDelete) / 2);
   const tiltAnimation = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
   const endAnimationTimeout = useRef(null);
@@ -116,7 +120,7 @@ const DnDLikeIOS = ({
           height: heightIconDelete,
           justifyContent: "center",
           alignItems: "center",
-          borderRadius: radiusIconDelete,
+          borderRadius: computedBorderRadius,
         }}>
         {IconDelete}
       </Pressable>
@@ -133,7 +137,7 @@ const DnDLikeIOS = ({
           height: heightIconDelete,
           justifyContent: "center",
           alignItems: "center",
-          borderRadius: radiusIconDelete,
+          borderRadius: computedBorderRadius,
         }}>
         <Text style={{ fontSize: 10, fontWeight: "bold", color: "#000000" }}>
           ─
